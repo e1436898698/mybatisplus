@@ -28,8 +28,8 @@ public class DCityController {
 
 
     @GetMapping(url1)
-    public void list(){
-
+    public String  list(){
+      return "success";
     }
 
 
