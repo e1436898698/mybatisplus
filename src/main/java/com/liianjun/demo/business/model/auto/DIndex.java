@@ -57,5 +57,11 @@ public class DIndex extends Model {
     @TableField("i_date")
     private String iDate;
 
+    /**
+     * 类型
+     */
+    @TableField("i_type")
+    public String iType;
+
 
 }
