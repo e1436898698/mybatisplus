@@ -73,7 +73,6 @@ public class ExcilUtils {
 
     @Test
     public   void readFinance() throws Exception {
-
         for (String array : arrays) {
             String type="";
             listInit();
