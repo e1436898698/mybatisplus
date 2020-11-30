@@ -46,6 +46,8 @@ public class ExcilUtils {
     private   Map<String,String> fileMap=null;
 
     private static final String[] arrays=new String[]{"省级指标1","省级指标2","本地网指标1","本地网指标2","本地网指标3","本地网指标4"};
+
+    private static final String[] arraysTwo=new String[]{"百元人工成本创收","百元人工成本创利","全口径用工结构","员工年龄结构","员工学历分布"};
     
     private  TreeSet<String> treeList;
     private List<DCity> dCities;
