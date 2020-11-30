@@ -9,6 +9,7 @@ import com.liianjun.demo.business.constant.Constant;
 import com.liianjun.demo.business.model.auto.*;
 import com.liianjun.demo.business.model.auto.vo.DCityVo;
 import com.liianjun.demo.business.service.*;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.formula.functions.T;
@@ -43,11 +44,19 @@ public class ExcilUtils {
     @Autowired
     private IDCityService idCityService;
 
-    private   Map<String,String> fileMap=null;
+    @Autowired
+    private IDAgeService idAgeService;
+    @Autowired
+    private IDAgeavgService idAgeavgService;
+    @Autowired
+    private IDEducationService idEducationService;
+
+    private Map<String,String> fileMap=null;
+
 
     private static final String[] arrays=new String[]{"省级指标1","省级指标2","本地网指标1","本地网指标2","本地网指标3","本地网指标4"};
-
-    private static final String[] arraysTwo=new String[]{"百元人工成本创收","百元人工成本创利","全口径用工结构","员工年龄结构","员工学历分布"};
+//,"全口径用工结构","百元人工成本创收","百元人工成本创利"
+    private static final String[] arraysTwo=new String[]{"员工年龄结构","员工学历分布"};
     
     private  TreeSet<String> treeList;
     private List<DCity> dCities;
@@ -68,10 +77,63 @@ public class ExcilUtils {
         itemNameList=new ArrayList<>();
         provincesList=new ArrayList<>();
         fileMap=new HashMap<>();
-        fileMap.put(Constant.TYPE3,"C:\\Users\\Administrator\\Desktop\\手工导入\\收入预测.xlsx");
+        fileMap.put(Constant.TYPE4,"C:\\Users\\Administrator\\Desktop\\手工导入\\员工.xlsx");
 
     }
 
+    @Test
+    public void readPersonnel()throws Exception{
+        for (String array : arraysTwo) {
+            String type="";
+            listInit();
+            ExcelReader excelReader = null;
+            try {
+                for (Map.Entry<String, String> entity : fileMap.entrySet()) {
+                    type = entity.getKey();
+                    excelReader = ExcelUtil.getReader(new FileInputStream(new File(fileMap.get(type))),array);
+                }
+            } catch (IllegalArgumentException e) {
+                continue;
+            }
+            List<List<Object>> read = excelReader.read();
+            switch(array) {
+                case Constant.AGE:
+                    insertAge(read);
+                    break;
+                case Constant.EDUCATION:
+                    insertEducation(read);
+                    break;
+                default:
+                    log.error("没有这种类型");
+            }
+        }
+    }
+
+    private void insertAge(List<List<Object>> read) {
+        read.remove(0);
+        List<Object> remove = read.remove(read.size() - 1);
+        String id = UUid.getUUID();
+        List<DAge> dAges=new ArrayList<>();
+        for (List<Object> objects : read) {
+            dAges.add(DAge.builder().aId(UUid.getUUID()).aAvgId(id).aGeneration(String.valueOf(1))
+                    .aProportion(String.valueOf(objects.get(2))).aCount(Integer.valueOf(objects.get(1).toString())).build());
+        }
+        idAgeService.saveBatch(dAges);
+        idAgeavgService.save(DAgeavg.builder().aAvg(String.valueOf(remove.get(1))).aId(id).build());
+        
+    }
+
+    private void insertEducation(List<List<Object>> read) {
+        read.remove(0);
+        List<DEducation> dEducations=new ArrayList<>();
+        for (List<Object> objects : read) {
+            dEducations.add(DEducation.builder().eId(UUid.getUUID())
+                    .eEducation(String.valueOf(objects.get(0)))
+                    .eCount(Integer.valueOf(String.valueOf(objects.get(1))))
+                    .aProportion(String.valueOf(objects.get(2))).build());
+        }
+        idEducationService.saveBatch(dEducations);
+    }
 
     @Test
     public   void readFinance() throws Exception {

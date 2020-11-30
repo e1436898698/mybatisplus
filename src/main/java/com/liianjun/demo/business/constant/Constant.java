@@ -11,6 +11,11 @@ public class Constant {
       public  static final String LOCALNETWORK2="本地网指标2";
       public  static final String LOCALNETWORK3="本地网指标3";
       public  static final String LOCALNETWORK4="本地网指标4";
+
+      public static final String  AGE="员工年龄结构";
+
+      public static final String EDUCATION="员工学历分布";
+
       /**
        * 财务
        */
