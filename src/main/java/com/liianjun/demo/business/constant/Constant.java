@@ -16,6 +16,15 @@ public class Constant {
 
       public static final String EDUCATION="员工学历分布";
 
+      public static final String LABORCOSTREVENUE="百元人工成本创收";
+
+      public static final String LABORCOSTCREATION="百元人工成本创利";
+
+      public static final String FULLCALIBEREMPLOYMENTSTRUCTURE="全口径用工结构";
+
+
+
+
       /**
        * 财务
        */

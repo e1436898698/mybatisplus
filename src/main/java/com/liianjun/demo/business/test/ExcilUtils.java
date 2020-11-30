@@ -43,19 +43,14 @@ public class ExcilUtils {
     private IDValueService idValueService;
     @Autowired
     private IDCityService idCityService;
-
     @Autowired
     private IDAgeService idAgeService;
     @Autowired
     private IDAgeavgService idAgeavgService;
     @Autowired
     private IDEducationService idEducationService;
-
     private Map<String,String> fileMap=null;
-
-
-    private static final String[] arrays=new String[]{"省级指标1","省级指标2","本地网指标1","本地网指标2","本地网指标3","本地网指标4"};
-//,"全口径用工结构","百元人工成本创收","百元人工成本创利"
+    private static final String[] arrays=new String[]{"省级指标1","省级指标2","本地网指标1","本地网指标2","本地网指标3","本地网指标4","全口径用工结构","百元人工成本创收","百元人工成本创利"};
     private static final String[] arraysTwo=new String[]{"员工年龄结构","员工学历分布"};
     
     private  TreeSet<String> treeList;
@@ -63,7 +58,7 @@ public class ExcilUtils {
     private List<DItem> dItems;
     private List<DValue> dValues;
     private List<DCityVo> dCityList;
-    private  List<DIndex> IndexList;
+    private List<DIndex> IndexList;
     private List<String> itemNameList;
     private List<DProvince> provincesList;
 
@@ -79,6 +74,46 @@ public class ExcilUtils {
         fileMap=new HashMap<>();
         fileMap.put(Constant.TYPE4,"C:\\Users\\Administrator\\Desktop\\手工导入\\员工.xlsx");
 
+    }
+
+    @Test
+    public   void readFinance() throws Exception {
+        for (String array : arrays) {
+            String type="";
+            listInit();
+            ExcelReader excelReader = null;
+            try {
+                for (Map.Entry<String, String> entity : fileMap.entrySet()) {
+                    type = entity.getKey();
+                    excelReader = ExcelUtil.getReader(new FileInputStream(new File(fileMap.get(type))),array);
+                }
+
+            } catch (IllegalArgumentException e) {
+                continue;
+            }
+            List<List<Object>> read = excelReader.read();
+            String localDateTime=getData(read);
+            read.remove(0);
+            switch(array){
+                case Constant.LOCALNETWORK2:
+                case Constant.LABORCOSTREVENUE:
+                case Constant.LABORCOSTCREATION:
+                case Constant.FULLCALIBEREMPLOYMENTSTRUCTURE:
+                    insertCityTo(localDateTime,read,type);
+                    break;
+                case Constant.PROVINCIAL1:
+                case Constant.PROVINCIAL2:
+                    insertData(localDateTime,read,type);
+                    break;
+                case Constant.LOCALNETWORK1:
+                case Constant.LOCALNETWORK3:
+                case Constant.LOCALNETWORK4:
+                    insertCity(localDateTime,read,type);
+                    break;
+                default:
+                    log.error("没有这种类型");
+            }
+        }
     }
 
     @Test
@@ -101,7 +136,7 @@ public class ExcilUtils {
                     insertAge(read);
                     break;
                 case Constant.EDUCATION:
-                    insertEducation(read);
+                   insertEducation(read);
                     break;
                 default:
                     log.error("没有这种类型");
@@ -133,43 +168,6 @@ public class ExcilUtils {
                     .aProportion(String.valueOf(objects.get(2))).build());
         }
         idEducationService.saveBatch(dEducations);
-    }
-
-    @Test
-    public   void readFinance() throws Exception {
-        for (String array : arrays) {
-            String type="";
-            listInit();
-            ExcelReader excelReader = null;
-            try {
-                for (Map.Entry<String, String> entity : fileMap.entrySet()) {
-                    type = entity.getKey();
-                    excelReader = ExcelUtil.getReader(new FileInputStream(new File(fileMap.get(type))),array);
-                }
-
-            } catch (IllegalArgumentException e) {
-                continue;
-            }
-            List<List<Object>> read = excelReader.read();
-            String localDateTime=getData(read);
-            read.remove(0);
-            switch(array){
-                case Constant.LOCALNETWORK2:
-                    insertCityTo(localDateTime,read,type);
-                    break;
-                case Constant.PROVINCIAL1:
-                case Constant.PROVINCIAL2:
-                    insertData(localDateTime,read,type);
-                    break;
-                case Constant.LOCALNETWORK1:
-                case Constant.LOCALNETWORK3:
-                case Constant.LOCALNETWORK4:
-                     insertCity(localDateTime,read,type);
-                    break;
-                default:
-                    log.error("没有这种类型");
-            }
-        }
     }
 
     /**
