@@ -1,12 +1,11 @@
 package com.liianjun.demo.business.controller;
 
 
-import com.liianjun.demo.business.service.IDCityService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * <p>
@@ -28,12 +27,9 @@ public class DCityController {
 
 
     @GetMapping(url1)
-    public String  list(){
-      return "success";
+    public void  list(HttpServletResponse response){
+
     }
-
-
-
 
 }
 

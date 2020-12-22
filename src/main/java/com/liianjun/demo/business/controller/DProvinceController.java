@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2020-11-17
  */
 @RestController
-@RequestMapping("/d-province")
+@RequestMapping("/province")
 public class DProvinceController {
 
 }

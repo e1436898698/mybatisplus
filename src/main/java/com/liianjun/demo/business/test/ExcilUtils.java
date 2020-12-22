@@ -184,15 +184,8 @@ public class ExcilUtils {
                 int x=2;
                 for (DIndex dIndex : IndexList) {
                     String uuid = UUid.getUUID();
-                    dItems.add(DItem.builder().iId(uuid)
-                            .iName(String.valueOf(itemList.get(i)))
-                            .indexId(dIndex.getIId())
-                            .build());
-                    dValues.add(DValue.builder().iId(uuid)
-                            .vValue(String.valueOf(objects.get(x)))
-                            .vId(UUid.getUUID())
-                            .date(date)
-                            .build());
+                    dItems.add(DItem.builder().iId(uuid).iName(String.valueOf(itemList.get(i))).indexId(dIndex.getIId()).build());
+                    dValues.add(DValue.builder().iId(uuid).vValue(String.valueOf(objects.get(x))).vId(UUid.getUUID()).date(date).build());
                     x++;
                     if(x==3){
                         x=2;
@@ -254,7 +247,7 @@ public class ExcilUtils {
             }else{
                 provincesList.add(DProvince.builder().pId(list.get(0).getPId()).pName(e).build());
             }
-        });
+        }); 
         for (int i = 2; i < read.size(); i++) {
             itemNameList.add(read.get(i).get(2).toString());
         }
@@ -290,7 +283,7 @@ public class ExcilUtils {
     }
 
     private void save(List<DIndex> indexList, List<DItem> dItems, List<DValue> dValues) {
-        idIndexService.saveBatch(IndexList);
+        idIndexService.saveBatch(indexList);
         idItemService.saveBatch(dItems);
         idValueService.saveBatch(dValues);
     }
