@@ -2,12 +2,15 @@ package com.liianjun.demo.utils;
 
 
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.IoUtil;
 import com.jcraft.jsch.*;
+import com.liianjun.demo.business.constant.Constant;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -16,6 +19,8 @@ import java.util.Vector;
 @Slf4j
 @Data
 public class SftpUtils {
+
+    private  static final String PATH="temp";
 
     private Session session;
     private Channel channel;
@@ -133,7 +138,7 @@ public class SftpUtils {
      * @return
      * @throws SftpException
      */
-    public InputStream getFile (String sftpFilePath) throws SftpException {
+    public  InputStream getFile(String sftpFilePath) throws SftpException {
         if (isFileExist(sftpFilePath)) {
             return chnSftp.get(sftpFilePath);
         }
@@ -146,7 +151,7 @@ public class SftpUtils {
      * @return
      * @throws SftpException
      */
-    public InputStream getInputStreamFile (String sftpFilePath) throws SftpException {
+    public  InputStream getInputStreamFile(String sftpFilePath) throws SftpException {
         return getFile(sftpFilePath);
     }
 
@@ -306,7 +311,7 @@ public class SftpUtils {
      * @return
      * @throws SftpException
      */
-    public boolean isFileExist (String srcSftpFilePath) throws SftpException {
+    public  boolean isFileExist(String srcSftpFilePath) throws SftpException {
         boolean isExitFlag = false;
         // 文件大于等于0则存在文件
         if (getFileSize(srcSftpFilePath) >= 0) {
@@ -321,7 +326,7 @@ public class SftpUtils {
      * @return 返回文件大小，如返回-2 文件不存在，-1文件读取异常
      * @throws SftpException
      */
-    public static long getFileSize (String srcSftpFilePath) throws SftpException {
+    public  long getFileSize (String srcSftpFilePath) throws SftpException {
         long filesize = 0;//文件大于等于0则存在
         try {
             SftpATTRS sftpATTRS = chnSftp.lstat(srcSftpFilePath);
@@ -339,7 +344,7 @@ public class SftpUtils {
      * 关闭资源
      * @param fos  文件输出流
      */
-    public void close (FileOutputStream fos) {
+    public  void close (FileOutputStream fos) {
 
         try {
             if (fos != null) {
@@ -367,7 +372,7 @@ public class SftpUtils {
      * @return
      * @throws IOException
      */
-    public byte[] inputStreamToByte (InputStream iStrm) throws IOException {
+    public static byte[] inputStreamToByte (InputStream iStrm) throws IOException {
         ByteArrayOutputStream bytestream = new ByteArrayOutputStream();
         int ch;
         while ((ch = iStrm.read()) != -1) {
@@ -392,6 +397,8 @@ public class SftpUtils {
         close(fos);
         return path;
     }
+
+
 
     /**
      * 下载文件
@@ -426,16 +433,37 @@ public class SftpUtils {
 
     }
 
+
+    public static List<String> getContent(String fileName){
+        String filePath="";
+        try {
+            SftpUtils sftp = new SftpUtils(Constant.SFTPIP, Constant.SFTPUSER, Constant.SFTPPASS,Constant.SFTPPORT);
+            filePath = sftp.down(Constant.SFTPPATH,fileName, System.getProperty("user.dir")+File.separator+PATH);
+            return  FileUtil.readLines(new File(filePath), Charset.forName("utf-8"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            FileUtil.del(new File(filePath));
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         try {
-            SftpUtils sftp = new SftpUtils("10.124.164.106", "fhljszhzhzxuser", "2eY]1mJ(", 22);
-            String down = sftp.down("/download/", "20201118_9800_sendOutRate_ZBZT_0001.REQ", "f://temp");
-            String s = FileUtil.readString(down, Charset.forName("GB2312"));
-            System.out.println(s);
+            SftpUtils sftp = new SftpUtils("133.224.220.93", "ftpuser", "Yylskl=0525", 22);
+            String filePath = sftp.down("/home/ftpuser/data/jkjs/", "ORGAN_GRID_ZB20210102.txt", System.getProperty("user.dir")+File.separator+PATH);
+     /*       FileUtil.readLine()*/
+            List<String> list = FileUtil.readLines(new File(filePath), Charset.forName("utf-8"));
+            for (String s : list) {
+                System.out.println(s);
+            }
+            FileUtil.del(new File(filePath));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+
 
 
 

@@ -38,5 +38,10 @@ public class DProvince extends Model {
     @TableField("p_name")
     private String pName;
 
+    /**
+     * 市名称
+     */
+    private String cName;
+
 
 }

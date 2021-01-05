@@ -46,5 +46,52 @@ public class Constant {
        */
       public  static final String TYPE5="5";
 
+      /**
+       * sftp文件路径
+       */
+      public  static final String SFTPPATH="/home/ftpuser/data/jkjs/";
+
+      /**
+       * 人员信息
+       */
+      public  static final String STAFFINFOZB="STAFF_INFO_ZB20201229.txt";
+
+      /**
+       * 政企组织机构
+       */
+      public  static final String ORGANGRIDJK="ORGAN_GRID_ZB20210102.txt";
+
+
+      /**
+       * 人员信息
+       */
+      public  static final String STAFFINFOZBTYPE="STAFF_INFO_ZB";
+
+      /**
+       * 政企组织机构
+       */
+      public  static final String ORGANGRIDJKTYPE="ORGAN_GRID_ZB";
+
+
+      /**
+       * sftpip
+       */
+      public  static final String SFTPIP="133.224.220.93";
+
+      /**
+       * sftpuser
+       */
+      public  static final String SFTPUSER="ftpuser";
+
+      /**
+       * sftppass
+       */
+      public  static final String SFTPPASS="Yylskl=0525";
+
+      /**
+       * sftpPort
+       */
+      public  static final int SFTPPORT=22;
+
 
 }
