@@ -72,8 +72,7 @@ public class ExcilUtils {
         itemNameList=new ArrayList<>();
         provincesList=new ArrayList<>();
         fileMap=new HashMap<>();
-        fileMap.put(Constant.TYPE4,"C:\\Users\\Administrator\\Desktop\\手工导入\\员工.xlsx");
-
+        fileMap.put(Constant.TYPE1,"C:\\Users\\Administrator\\Desktop\\数字化大屏数据提供模板11月.xlsx");
     }
 
     @Test
@@ -241,11 +240,11 @@ public class ExcilUtils {
             treeList.add(read.get(i).get(1).toString());
         }
         treeList.forEach(e->{
-            List<DProvince> list = idProvinceService.list(new QueryWrapper<DProvince>().lambda().eq(DProvince::getPName,e));
-            if(CollUtil.isEmpty(list)){
+            DProvince dProvince = idProvinceService.getOne(new QueryWrapper<DProvince>().lambda().eq(DProvince::getPName, e));
+            if(Objects.isNull(dProvince)){
                 provincesList.add(DProvince.builder().pId(UUid.getUUID()).pName(e).build());
             }else{
-                provincesList.add(DProvince.builder().pId(list.get(0).getPId()).pName(e).build());
+                provincesList.add(DProvince.builder().pId(dProvince.getPId()).pName(e).build());
             }
         }); 
         for (int i = 2; i < read.size(); i++) {

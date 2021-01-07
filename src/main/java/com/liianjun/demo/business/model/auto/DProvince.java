@@ -38,9 +38,9 @@ public class DProvince extends Model {
     @TableField("p_name")
     private String pName;
 
-    /**
-     * 市名称
-     */
+
+    /* 市名称*/
+    @TableField(exist = false)
     private String cName;
 
 

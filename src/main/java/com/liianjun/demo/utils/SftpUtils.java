@@ -448,26 +448,4 @@ public class SftpUtils {
         return null;
     }
 
-    public static void main(String[] args) {
-        try {
-            SftpUtils sftp = new SftpUtils("133.224.220.93", "ftpuser", "Yylskl=0525", 22);
-            String filePath = sftp.down("/home/ftpuser/data/jkjs/", "ORGAN_GRID_ZB20210102.txt", System.getProperty("user.dir")+File.separator+PATH);
-     /*       FileUtil.readLine()*/
-            List<String> list = FileUtil.readLines(new File(filePath), Charset.forName("utf-8"));
-            for (String s : list) {
-                System.out.println(s);
-            }
-            FileUtil.del(new File(filePath));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
-
-
-
-
-
 }
