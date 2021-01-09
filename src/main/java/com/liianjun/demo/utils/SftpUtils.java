@@ -4,7 +4,7 @@ package com.liianjun.demo.utils;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
 import com.jcraft.jsch.*;
-import com.liianjun.demo.business.constant.Constant;
+
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -437,9 +437,9 @@ public class SftpUtils {
     public static List<String> getContent(String fileName){
         String filePath="";
         try {
-            SftpUtils sftp = new SftpUtils(Constant.SFTPIP, Constant.SFTPUSER, Constant.SFTPPASS,Constant.SFTPPORT);
-            filePath = sftp.down(Constant.SFTPPATH,fileName, System.getProperty("user.dir")+File.separator+PATH);
-            return  FileUtil.readLines(new File(filePath), Charset.forName("utf-8"));
+          //  SftpUtils sftp = new SftpUtils(Constant.SFTPIP, Constant.SFTPUSER, Constant.SFTPPASS,Constant.SFTPPORT);
+           // filePath = sftp.down(Constant.SFTPPATH,fileName, System.getProperty("user.dir")+File.separator+PATH);
+           // return  FileUtil.readLines(new File(filePath), Charset.forName("utf-8"));
         } catch (Exception e) {
             e.printStackTrace();
         }finally {

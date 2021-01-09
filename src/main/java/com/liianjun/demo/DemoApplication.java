@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan("com.liianjun.demo")
-@MapperScan(value = "com.liianjun.demo.business.mapper.auto")
+@MapperScan(value = "com.liianjun.demo.market.mapper.auto")
 public class DemoApplication {
 
     public static void main(String[] args) {

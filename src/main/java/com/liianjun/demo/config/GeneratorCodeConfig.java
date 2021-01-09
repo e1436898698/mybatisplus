@@ -40,16 +40,16 @@ public class GeneratorCodeConfig {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://10.242.35.129:33306/jeecg-boot?characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&rewriteBatchedStatements=true&zeroDateTimeBehavior=CONVERT_TO_NULL&autoReconnect=true");
+        dsc.setUrl("jdbc:mysql://localhost:3306/szhzhzx?characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&rewriteBatchedStatements=true&zeroDateTimeBehavior=CONVERT_TO_NULL&autoReconnect=true");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
-        dsc.setPassword("1234QWer");
+        dsc.setPassword("lijianjun");
         mpg.setDataSource(dsc);
 
         // 包配置
         PackageConfig pc = new PackageConfig();
 //        pc.setModuleName(scanner("模块名"));
-        pc.setParent("com.liianjun.demo.business");
+        pc.setParent("com.liianjun.demo.market");
         pc.setEntity("model.auto");
         pc.setMapper("mapper.auto");
         pc.setService("service");
