@@ -3,7 +3,10 @@ package com.liianjun.demo.market.service;
 import com.liianjun.demo.common.Response;
 import com.liianjun.demo.market.model.auto.DRevenue;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.liianjun.demo.market.model.auto.vo.DRevenueVo;
 import com.liianjun.demo.market.model.auto.vo.PopUpsVo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,4 +18,6 @@ import com.liianjun.demo.market.model.auto.vo.PopUpsVo;
  */
 public interface IDRevenueService extends IService<DRevenue> {
     PopUpsVo getPopUps(DRevenue dRevenue);
+
+    List<DRevenueVo> getPercentage(DRevenue dRevenue);
 }

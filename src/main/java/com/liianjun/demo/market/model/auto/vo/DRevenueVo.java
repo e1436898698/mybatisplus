@@ -5,15 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-import java.util.Map;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PopUpsVo {
+public class DRevenueVo {
 
-    public List<Map<String,Object>> title;
-
-    public List<Map<String,Object>> data;
+    private String cityName;
+    private String Percentage;
+    private String dDistrict;
 }
